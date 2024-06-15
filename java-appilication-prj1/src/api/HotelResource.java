@@ -5,6 +5,7 @@ import interfaces.IRoom;
 import models.Customer;
 import models.Reservation;
 import services.CustomerService;
+import services.ReservationService;
 
 import java.util.*;
 
@@ -24,22 +25,22 @@ public class HotelResource implements IHotelResource {
 
     @Override
     public IRoom getRoom(String roomNumber) {
-        return null;
+        return ReservationService.Instance().getARoom(roomNumber);
     }
 
     @Override
-    public Reservation bookARoom(String customerEmail, IRoom room, Date checkInDate, Date CheckOutDate) {
-        return null;
+    public Reservation bookARoom(String email, IRoom room, Date checkInDate, Date checkOutDate) {
+        return ReservationService.Instance().reserveARoom(CustomerService.Instance().getCustomerDetail(email), room, checkInDate, checkOutDate);
     }
 
     @Override
     public Collection<Reservation> getCustomersReservations(String email) {
-        return List.of();
+        return ReservationService.Instance().getCustomerReservations(CustomerService.Instance().getCustomerDetail(email));
     }
 
     @Override
-    public Collection<IRoom> findARoom(Date checkIn, Date checkOut) {
-        return List.of();
+    public Collection<IRoom> findRooms(Date checkIn, Date checkOut) {
+        return ReservationService.Instance().findRooms(checkIn, checkOut);
     }
 
     @Override

@@ -15,7 +15,7 @@ public interface IHotelResource {
 
     public Collection<Reservation> getCustomersReservations(String email);
 
-    public Collection<IRoom> findARoom(Date checkIn, Date checkOut);
+    public Collection<IRoom> findRooms(Date checkIn, Date checkOut);
 
     public Customer getCustomerDetail(String email);
 }
