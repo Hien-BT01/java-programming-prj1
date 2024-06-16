@@ -9,7 +9,7 @@ public class Customer {
 
     public Customer(String email, String firstName, String lastName) {
         if (!Constant.EMAIL_REGEX_PATTERN.matcher(email).matches()) {
-            throw new IllegalArgumentException("Exception, invalid email");
+            throw new IllegalArgumentException(Constant.INVALID_EMAIL_FORMAT);
         }
         this.email = email;
         this.firstName = firstName;
