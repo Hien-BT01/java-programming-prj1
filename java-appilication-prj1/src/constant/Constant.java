@@ -39,9 +39,23 @@ public class Constant {
 
     public static final Integer INT_THREE = 3;
 
+    public static final Integer INT_FOUR = 4;
+
+    public static final Integer INT_FIVE = 5;
+
+    public static final Integer INT_SIX = 6;
+
     public static final Integer INT_SEVEN = 7;
 
     public static final Integer INT_TEN = 10;
+
+    public static final Integer INT_ELEVEN = 11;
+
+    public static final Double FIFTY_PRICE = 50.00;
+
+    public static final Double ONE_HUNDRED_PRICE = 100.00;
+
+    public static final Double ZERO_PRICE = 0.00;
 
     public static final String NULL_VALUE_EXCEPTION = "Data can not be null";
 

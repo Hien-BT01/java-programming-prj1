@@ -124,17 +124,16 @@ public class AdminMenu {
     }
 
     private static void testData(){
-        // add some rooms
         String roomNumber;
-        double price = 0.00;
+        double price = Constant.ZERO_PRICE;
         RoomTypeEnum roomType;
         for (int i = Constant.INT_ONE; i <= Constant.INT_THREE; i++) {
             roomNumber = Integer.toString(i);
-            if (i % Constant.INT_TWO == 0) {
-                price = 100.00;
+            if (i % Constant.INT_TWO == Constant.INT_ZERO) {
+                price = Constant.ONE_HUNDRED_PRICE;
                 roomType = RoomTypeEnum.DOUBLE;
             } else {
-                price = 50.00;
+                price = Constant.FIFTY_PRICE;
                 roomType = RoomTypeEnum.SINGLE;
             }
             IRoom newRoom = new Room(roomNumber, price, roomType);
@@ -151,26 +150,26 @@ public class AdminMenu {
         Date checkInDate;
         Date checkOutDate;
         calendar.setTime(today);
-        calendar.add(Calendar.DATE, 3);
+        calendar.add(Calendar.DATE, Constant.INT_THREE);
         checkInDate = calendar.getTime();
         calendar1.setTime(checkInDate);
-        calendar1.add(Calendar.DATE, 6);
+        calendar1.add(Calendar.DATE, Constant.INT_SIX);
         checkOutDate = calendar1.getTime();
-        HotelResource.Instance().bookARoom("test1@mail.com", HotelResource.Instance().getRoom("1"), checkInDate, checkOutDate);
+        HotelResource.Instance().bookARoom("test1@mail.com", HotelResource.Instance().getRoom(Constant.INT_ONE.toString()), checkInDate, checkOutDate);
         calendar.setTime(today);
-        calendar.add(Calendar.DATE, 5);
+        calendar.add(Calendar.DATE, Constant.INT_FIVE);
         checkInDate = calendar.getTime();
         calendar1.setTime(checkInDate);
-        calendar1.add(Calendar.DATE, 11);
+        calendar1.add(Calendar.DATE, Constant.INT_ELEVEN);
         checkOutDate = calendar1.getTime();
-        HotelResource.Instance().bookARoom("test3@mail.com", HotelResource.Instance().getRoom("2"), checkInDate, checkOutDate);
+        HotelResource.Instance().bookARoom("test3@mail.com", HotelResource.Instance().getRoom(Constant.INT_TWO.toString()), checkInDate, checkOutDate);
         calendar.setTime(today);
-        calendar.add(Calendar.DATE, 6);
+        calendar.add(Calendar.DATE, Constant.INT_SIX);
         checkInDate = calendar.getTime();
         calendar1.setTime(checkInDate);
-        calendar1.add(Calendar.DATE, 4);
+        calendar1.add(Calendar.DATE, Constant.INT_FOUR);
         checkOutDate = calendar1.getTime();
-        HotelResource.Instance().bookARoom("test4@mail.com", HotelResource.Instance().getRoom("3"), checkInDate, checkOutDate);
+        HotelResource.Instance().bookARoom("test4@mail.com", HotelResource.Instance().getRoom(Constant.INT_THREE.toString()), checkInDate, checkOutDate);
         System.out.println("Mock data successfully");
     }
 }
