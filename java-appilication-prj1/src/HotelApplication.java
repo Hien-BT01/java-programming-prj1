@@ -2,7 +2,7 @@ import constant.Constant;
 
 import java.util.Scanner;
 
-public class Application {
+public class HotelApplication {
     public static void main(String[] args) {
         boolean isContinue = true;
         try {
