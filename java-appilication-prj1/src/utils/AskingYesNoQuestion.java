@@ -12,7 +12,7 @@ public class AskingYesNoQuestion {
 
     public static boolean continueAction(Scanner scanner){
         System.out.println("Would you like to continue?" + ASKING_YES_NO);
-        String confirmation = scanner.next();
+        String confirmation = scanner.nextLine();
         return askYesNoQuestion(confirmation);
     }
 }

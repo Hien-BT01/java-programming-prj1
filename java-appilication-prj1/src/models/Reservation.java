@@ -1,6 +1,7 @@
 package models;
 
 import interfaces.IRoom;
+import utils.DateValidation;
 
 import java.util.Date;
 
@@ -51,5 +52,13 @@ public class Reservation {
 
     public boolean isReserved(Date checkInDate, Date checkOutDate) {
         return checkInDate.before(this.checkOutDate) && checkOutDate.after(this.checkInDate);
+    }
+
+    @Override
+    public String toString() {
+        return "Reservation for " + this.customer.getEmail() +
+                " with room number " + room.getRoomNumber() +
+                ", Check-In on: " + DateValidation.formatDateString(this.checkInDate) +
+                ", Check-Out on: " + DateValidation.formatDateString(this.checkOutDate);
     }
 }

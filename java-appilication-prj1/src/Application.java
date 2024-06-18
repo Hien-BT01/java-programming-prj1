@@ -5,10 +5,11 @@ import java.util.Scanner;
 public class Application {
     public static void main(String[] args) {
         boolean isContinue = true;
-        try (Scanner scanner = new Scanner(System.in)) {
+        try {
             while (isContinue) {
                 try {
                     MainMenu.displayChoices();
+                    Scanner scanner = new Scanner(System.in);
                     System.out.println(Constant.WELCOME_CHOOSE_OPTION_MESSAGE);
                     int choice = Integer.parseInt(scanner.nextLine());
                     isContinue = MainMenu.execute(scanner, choice);

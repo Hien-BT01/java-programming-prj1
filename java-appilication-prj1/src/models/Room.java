@@ -27,8 +27,9 @@ public class Room implements IRoom {
         this.roomTypeEnum = roomTypeEnum;
     }
 
+    @Override
     public String toString() {
-        return "Room number: " + this.roomNumber + " " + this.roomTypeEnum + " bed room Price: $" + this.price;
+        return "Room number: " + this.roomNumber + ", room type: " + this.roomTypeEnum + " and bed room Price: $" + this.price;
     }
 
     @Override

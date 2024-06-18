@@ -28,8 +28,16 @@ public class MainMenu {
                 findAndReserveRoom(scanner);
                 break;
             }
+            case 2: {
+                showMyReservations(scanner);
+                break;
+            }
             case 3: {
                 registerCustomerAccount(scanner);
+                break;
+            }
+            case 4: {
+                runAdminMenu();
                 break;
             }
             case 5: {
@@ -40,8 +48,21 @@ public class MainMenu {
                 System.out.println(Constant.CHOOSE_MAIN_MENU_OPTION_MESSAGE);
             }
         }
-        scanner = new Scanner(System.in);
         return isContinue;
+    }
+
+    private static void runAdminMenu() {
+        boolean keepAdminRunning = true;
+        while (keepAdminRunning) {
+            try {
+                AdminMenu.displayChoices();
+                Scanner scanner = new Scanner(System.in);
+                int adminSelection = Integer.parseInt(scanner.nextLine());
+                keepAdminRunning = AdminMenu.execute(scanner, adminSelection);
+            } catch (NumberFormatException ex) {
+                System.out.println(Constant.CHOOSE_ADMIN_MENU_OPTION_MESSAGE);
+            }
+        }
     }
 
     private static void findAndReserveRoom(Scanner scanner){
@@ -63,8 +84,12 @@ public class MainMenu {
                         if(!availableRooms.isEmpty()){
                             isAvailable = true;
                             System.out.println(MessageFormat.format("There are no free rooms from the day you are looking for {0} - {1}. There are available check-in on date: {2} and check-out date: {3}", checkInDate, checkOutDate, recommendCheckInDate, recommendCheckOutDate));
-                            checkInDate = DateValidation.dateFormatValidation(recommendCheckInDate.toString());
-                            checkOutDate = DateValidation.dateFormatValidation(recommendCheckOutDate.toString());
+                            checkInDate = DateValidation.dateFormatValidation(DateValidation.formatDateString(recommendCheckInDate));
+                            checkOutDate = DateValidation.dateFormatValidation(DateValidation.formatDateString(recommendCheckOutDate));
+                            confirmationBooking = AskBooking(scanner, availableRooms);
+                        }else {
+                            checkInDate = new Date(recommendCheckInDate.getTime());
+                            checkOutDate = new Date((recommendCheckOutDate.getTime()));
                         }
                     }
                 }catch (ParseException ex){
@@ -79,12 +104,21 @@ public class MainMenu {
             }else {
                 Customer customer = checkCustomerInfo(scanner);
                 if(Objects.isNull(customer)){
-                    Customer newCustomer = registerCustomerAccount(scanner);
-                    if(Objects.isNull(newCustomer)) {
-                        System.out.println("Something went wrong while create new account, please try again");
+                    System.out.println("Your account does not exist, do you want to create a new one?" + ASKING_YES_NO);
+                    String confirmation = scanner.nextLine();
+                    boolean isConfirmed = AskingYesNoQuestion.askYesNoQuestion(confirmation);
+                    if(isConfirmed){
+                        Customer newCustomer = registerCustomerAccount(scanner);
+                        if(Objects.isNull(newCustomer)) {
+                            System.out.println("Something went wrong while create new account, please try again");
+                        }else {
+                            bookARoom(scanner, availableRooms, newCustomer, checkInDate, checkOutDate);
+                        }
                     }else {
-                        bookARoom(scanner, availableRooms, newCustomer, checkInDate, checkOutDate);
+                        System.out.println("Thank you for coming our service");
                     }
+                }else {
+                    bookARoom(scanner, availableRooms, customer, checkInDate, checkOutDate);
                 }
             }
         }
@@ -96,7 +130,7 @@ public class MainMenu {
         while(!isValidatedDate){
             try{
                 System.out.println(message);
-                String dateFromInput = scanner.next();
+                String dateFromInput = scanner.nextLine();
                 returnedDate = DateValidation.dateFormatValidation(dateFromInput);
                 if(returnedDate.before(date)){
                     System.out.println(errorMessage);
@@ -115,19 +149,19 @@ public class MainMenu {
             System.out.println(room.toString());
         }
         System.out.println("Would you like to book a room?" + ASKING_YES_NO);
-        String confirmation = scanner.next();
+        String confirmation = scanner.nextLine();
         return AskingYesNoQuestion.askYesNoQuestion(confirmation);
     }
 
     private static Customer registerCustomerAccount(Scanner scanner){
         boolean isContinue = true;
         boolean isEmailLegit = false;
-        String email = null;
-        String firstName = null;
-        String lastName = null;
+        String email;
+        String firstName;
+        String lastName;
         do{
             System.out.println(ENTER_EMAIL_MESSAGE);
-            email = scanner.next();
+            email = scanner.nextLine();
             Customer customer = HotelResource.Instance().getCustomerDetail(email);
             if(Objects.nonNull(customer)){
                 System.out.println(INVALID_EMAIL_EXISTED);
@@ -149,9 +183,9 @@ public class MainMenu {
             isContinue = true;
             do{
                 System.out.println(ENTER_FIRST_NAME_MESSAGE);
-                firstName = scanner.next();
+                firstName = scanner.nextLine();
                 System.out.println(ENTER_LAST_NAME_MESSAGE);
-                lastName = scanner.next();
+                lastName = scanner.nextLine();
                 if(firstName.isBlank() || lastName.isBlank()){
                     System.out.println("Your name is empty");
                     if(!AskingYesNoQuestion.continueAction(scanner)){
@@ -172,7 +206,7 @@ public class MainMenu {
 
     private static Customer checkCustomerInfo(Scanner scanner){
         System.out.println(ENTER_EMAIL_MESSAGE);
-        String email = scanner.next();
+        String email = scanner.nextLine();
         return HotelResource.Instance().getCustomerDetail(email);
     }
 
@@ -181,7 +215,7 @@ public class MainMenu {
         boolean isDone = false;
         while (!isDone){
             System.out.println("Which room number do you want to reserve?: ");
-            String roomNumber = scanner.next();
+            String roomNumber = scanner.nextLine();
             room = HotelResource.Instance().getRoom(roomNumber);
             if(Objects.isNull(room)){
                 System.out.println(INVALID_ROOM_NONEXISTED);
@@ -195,7 +229,6 @@ public class MainMenu {
             if(!isDone) {
                 boolean isContinued = AskingYesNoQuestion.continueAction(scanner);
                 if(isContinued) {
-                    isDone = true;
                     room = null;
                 }
             }
@@ -207,5 +240,24 @@ public class MainMenu {
             System.out.println("Your room was not booked successfully.");
         }
     }
-
+    private static void showMyReservations(Scanner scanner){
+        try{
+            System.out.println(ENTER_EMAIL_MESSAGE);
+            String email = scanner.nextLine();
+            if(!EmailValidation.isEmailValidFormat(email)){
+                throw new IllegalArgumentException(Constant.INVALID_EMAIL_FORMAT);
+            }
+            Customer customer = HotelResource.Instance().getCustomerDetail(email);
+            if(Objects.isNull(customer)){
+                throw new IllegalArgumentException(("Your entered email does not exist"));
+            }
+            Collection<Reservation> reservations = HotelResource.Instance().getCustomersReservations(email);
+            if(reservations.isEmpty()) System.out.println("There is no reservation now with you account");
+            else {
+                reservations.forEach(reservation -> System.out.println(reservation.toString()));
+            }
+        }catch (IllegalArgumentException ex){
+            System.out.println(ex.getMessage());
+        }
+    }
 }

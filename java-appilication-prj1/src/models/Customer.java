@@ -2,6 +2,8 @@ package models;
 
 import constant.Constant;
 
+import java.text.MessageFormat;
+
 public class Customer {
     private String email;
     private String firstName;
@@ -40,7 +42,8 @@ public class Customer {
         this.lastName = lastName;
     }
 
+    @Override
     public String toString() {
-        return "Customer: " + this.firstName + " " + this.lastName + " (" + this.email + ")";
+        return MessageFormat.format("Customer: first name is {0}, last name is: {1} and email is: {2}", this.firstName, this.lastName, this.email);
     }
 }

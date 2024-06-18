@@ -41,7 +41,7 @@ public class ReservationService {
         if(Objects.isNull((customer)) || Objects.isNull(room) || Objects.isNull(checkInDate) || Objects.isNull(checkOutDate)) {
             throw new IllegalArgumentException(Constant.NULL_VALUE_EXCEPTION);
         }
-        if(DateValidation.isValidReservationDate(checkInDate, checkOutDate)){
+        if(!DateValidation.isValidReservationDate(checkInDate, checkOutDate)){
             throw new IllegalArgumentException(Constant.INVALID_DATETIME_EXCEPTION);
         }
         if(isReservedRoom(room, checkInDate, checkOutDate)){

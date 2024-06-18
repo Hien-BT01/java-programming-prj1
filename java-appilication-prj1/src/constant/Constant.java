@@ -14,13 +14,30 @@ public class Constant {
 
     private static final String WELCOME_MENU_FIFTH = "Exit";
 
+    private static final String ADMIN_MENU_FIRST = "See all Customers";
+
+    private static final String ADMIN_MENU_SECOND = "See all Rooms";
+
+    private static final String ADMIN_MENU_THIRD = "See all Reservations";
+
+    private static final String ADMIN_MENU_FOURTH = "Add a Room";
+
+    private static final String ADMIN_MENU_FIFTH = "Add Test Data";
+
+    private static final String ADMIN_MENU_SIXTH = "Back to Main Menu";
+
     public static List<String> MAIN_MENU = List.of(WELCOME_MENU_FIRST, WELCOME_MENU_SECOND, WELCOME_MENU_THIRD, WELCOME_MENU_FOURTH, WELCOME_MENU_FIFTH);
+    public static List<String> ADMIN_MENU = List.of(ADMIN_MENU_FIRST, ADMIN_MENU_SECOND, ADMIN_MENU_THIRD, ADMIN_MENU_FOURTH, ADMIN_MENU_FIFTH, ADMIN_MENU_SIXTH);
 
     public static final String HYPHEN = "-";
 
     public static final Integer INT_ZERO = 0;
 
     public static final Integer INT_ONE = 1;
+
+    public static final Integer INT_TWO = 2;
+
+    public static final Integer INT_THREE = 3;
 
     public static final Integer INT_SEVEN = 7;
 
@@ -48,7 +65,9 @@ public class Constant {
 
     public static final String WELCOME_CHOOSE_OPTION_MESSAGE = "Please choose the option below:";
 
-    public static final String CHOOSE_MAIN_MENU_OPTION_MESSAGE = "Please choose number from 1 - 5\n";
+    public static final String CHOOSE_MAIN_MENU_OPTION_MESSAGE = "Please only choose number from 1 - 5\n";
+
+    public static final String CHOOSE_ADMIN_MENU_OPTION_MESSAGE = "Please only choose number from 1 - 6\n";
 
     public static final String ENTER_EMAIL_MESSAGE = "Please enter your email as format abc@gmai.com: ";
 
@@ -71,8 +90,6 @@ public class Constant {
     public static final String INVALID_ROOM_NONEXISTED = "There is no room corresponding to your room number, please try again: ";
 
     public static final String YES = "Y,YES";
-
-    public static final String NO = "N, NO";
 
     private static final String EMAIL_REGEX = "^(.+)@(.+).(.+)$";
 
