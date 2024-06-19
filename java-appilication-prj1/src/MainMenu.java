@@ -228,8 +228,9 @@ public class MainMenu {
             }
             if(!isDone) {
                 boolean isContinued = AskingYesNoQuestion.continueAction(scanner);
-                if(isContinued) {
+                if(!isContinued) {
                     room = null;
+                    isDone = true;
                 }
             }
         }

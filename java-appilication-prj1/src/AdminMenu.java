@@ -71,13 +71,15 @@ public class AdminMenu {
     private static void addARoom(Scanner scanner){
         boolean isContinue = true;
         String roomNumber;
+        int number;
         double roomPrice;
         String roomType;
         RoomTypeEnum roomTypeEnum = null;
         do{
             try{
                 System.out.println("Please enter room number: ");
-                roomNumber = scanner.nextLine();
+                number = scanner.nextInt();
+                roomNumber = String.valueOf(number);
                 IRoom room = HotelResource.Instance().getRoom(roomNumber);
                 if(Objects.nonNull(room)){
                     System.out.println("The room has this room number already existed, please try again.");
@@ -118,6 +120,9 @@ public class AdminMenu {
                 isContinue = false;
             }catch (IllegalArgumentException ex){
                 System.out.println(ex.getMessage());
+                isContinue = false;
+            }catch (InputMismatchException ex){
+                System.out.println("Room number must be a number!");
                 isContinue = false;
             }
         }while(isContinue);
